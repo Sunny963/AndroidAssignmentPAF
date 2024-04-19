@@ -19,10 +19,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         imageCache = ImageCache()
-        loadImages()
+        // TODO by default UI will be render in jetpack compose view
+        //  to run using XML view please pass false in loadImages as loadImages(false)
+        loadImages(true)
     }
 
-    private fun loadImages() {
+    private fun loadImages(isComposeView: Boolean) {
         binding.apply {
             CoroutineScope(Dispatchers.IO).launch {
                 val images = UnsplashService.getImages(
@@ -30,7 +32,14 @@ class MainActivity : AppCompatActivity() {
                     imageCountPerPage
                 )
                 CoroutineScope(Dispatchers.Main).launch {
-                    rcvImage.adapter = ImageAdapter(images, imageCache)
+                    if (isComposeView) {
+                        composeView.apply {
+                            setContent {
+                                ImageGrid(images = images)
+                            }
+                        }
+                    } else
+                        rcvImage.adapter = ImageAdapter(images, imageCache)
                 }
             }
         }

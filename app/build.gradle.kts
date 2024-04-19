@@ -7,6 +7,14 @@ android {
     namespace = "com.example.androidassignmentpaf"
     compileSdk = 34
 
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.12"
+    }
+
     defaultConfig {
         applicationId = "com.example.androidassignmentpaf"
         minSdk = 28
@@ -45,6 +53,10 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.coil.compose)
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.ui.tooling.preview.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
